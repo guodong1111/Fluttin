@@ -15,6 +15,8 @@ class Fluttin {
 
   Set<Module> _modules = HashSet<Module>();
 
+  Scope get rootScope => scopeRegistry.rootScope;
+
   T get<T>(Qualifier? qualifier, ParametersDefinition? parameters) {
     return scopeRegistry.rootScope
         .get(qualifier: qualifier, parameters: parameters);
