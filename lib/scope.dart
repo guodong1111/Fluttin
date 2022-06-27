@@ -32,6 +32,10 @@ class Scope {
     }
   }
 
+  bool isRootScope() {
+    return ScopeDefinition.ROOT_SCOPE_ID == scopeId;
+  }
+
   T get<T>({Qualifier? qualifier, ParametersDefinition? parameters}) {
     return _get(T, qualifier, parameters);
   }
