@@ -24,14 +24,6 @@ class Scope {
     _linkedScope.addAll(links);
   }
 
-  Scope? getPreviousScope() {
-    if (_linkedScope.isEmpty) {
-      return null;
-    } else {
-      return _linkedScope.last;
-    }
-  }
-
   bool isRootScope() {
     return ScopeDefinition.ROOT_SCOPE_ID == scopeId;
   }
