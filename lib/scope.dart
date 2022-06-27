@@ -6,7 +6,7 @@ import 'scope_definition.dart';
 
 class Scope {
   Scope(this._fluttin, this.scopeId, this.scopeDefinition, {this.source}) {
-    instanceRegistry = InstanceRegistry(this);
+    _instanceRegistry = InstanceRegistry(this);
   }
 
   final Fluttin _fluttin;
@@ -15,13 +15,21 @@ class Scope {
   final ScopeDefinition scopeDefinition;
 
   dynamic source;
-  final List<Scope> linkedScope = <Scope>[];
-  late final InstanceRegistry instanceRegistry;
+  final List<Scope> _linkedScope = <Scope>[];
+  late final InstanceRegistry _instanceRegistry;
   DefinitionParameters? _parameters;
 
   void create(List<Scope> links) {
-    instanceRegistry.create(scopeDefinition.definitions);
-    linkedScope.addAll(links);
+    _instanceRegistry.create(scopeDefinition.definitions);
+    _linkedScope.addAll(links);
+  }
+
+  Scope? getPreviousScope() {
+    if (_linkedScope.isEmpty) {
+      return null;
+    } else {
+      return _linkedScope.last;
+    }
   }
 
   T get<T>({Qualifier? qualifier, ParametersDefinition? parameters}) {
@@ -49,7 +57,7 @@ class Scope {
       ParametersDefinition? parameters) {
     final String key = indexKey(runtimeType, qualifier);
 
-    T? instance = instanceRegistry.resolveInstance(key, parameters) ??
+    T? instance = _instanceRegistry.resolveInstance(key, parameters) ??
         getFromSource() ?? _parameters?.getOrNull() ??
         findInOtherScope(qualifier, parameters);
     if (null == instance) {
@@ -69,7 +77,7 @@ class Scope {
   T? findInOtherScope<T>(Qualifier? qualifier,
       ParametersDefinition? parameters) {
     T? instance;
-    for (Scope scope in linkedScope) {
+    for (Scope scope in _linkedScope) {
       instance = scope.getOrNull<T>(
           qualifier: qualifier,
           parameters: parameters
@@ -80,11 +88,11 @@ class Scope {
   }
 
   void dropInstance(BeanDefinition beanDefinition) {
-    instanceRegistry.dropDefinition(beanDefinition);
+    _instanceRegistry.dropDefinition(beanDefinition);
   }
 
   void loadDefinition(BeanDefinition beanDefinition) {
-    instanceRegistry.createDefinition(beanDefinition);
+    _instanceRegistry.createDefinition(beanDefinition);
   }
 
   void close() {
@@ -94,7 +102,7 @@ class Scope {
 
   void clear() {
     source = null;
-    instanceRegistry.close();
+    _instanceRegistry.close();
   }
 
   void addParameters(DefinitionParameters parameters) {
