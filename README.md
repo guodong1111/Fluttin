@@ -9,6 +9,98 @@ It's just that dart's closure doesn't support receiver type, so it looks a bit c
 But the principle is the same.
 For the concept of DI, please refer to the official website of koin: https://insert-koin.io/
 
+You need to execute startFluttin at the beginning of the project.
+```dart
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+  @override
+  State<StatefulWidget> createState() {
+    return MyAppState();
+  }
+}
+
+class MyAppState extends State<MyApp> {
+
+  @override
+  void initState() {
+    super.initState();
+    initFluttin();
+  }
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+  }
+
+  Future<void> initFluttin() async {
+    startFluttin((FluttinApplication application) {
+      application.modules(<Module>[
+        Modules.module,
+        Modules.screenModule,
+        Modules.serviceModule,
+        Modules.dbModule,
+      ]);
+    });
+  }
+}
+```
+
+Then create modules.dart in libs/
+```dart
+
+class Modules {
+  static Module module = module((Module module) {
+    module.factory((Scope scope, DefinitionParameters parameters) =>
+        MyGameRepository(
+            scope.get(), scope.get(), scope.get(), scope.get(), scope.get()));
+    module.factory((Scope scope, DefinitionParameters parameters) =>
+        ReviewRepository(scope.get(), scope.get()));
+    module.factory((Scope scope, DefinitionParameters parameters) =>
+        RelationRepository(scope.get(), scope.get()));
+    module.factory((Scope scope, DefinitionParameters parameters) =>
+        FavoriteRepository(scope.get(), scope.get()));
+  });
+
+  static Module screenModule = module((Module module) {
+    module.scope<ScreenScope>((scopeSet) {});
+  });
+
+  static Module serviceModule = module((Module module) {
+    module.single((Scope scope, DefinitionParameters parameters) =>
+        ServiceManager.instance);
+    module.single((Scope scope, DefinitionParameters parameters) =>
+        scope.get<ServiceManager>().gatewayService);
+    module.single((Scope scope, DefinitionParameters parameters) =>
+        scope.get<ServiceManager>().userService);
+    module.single((Scope scope, DefinitionParameters parameters) =>
+        scope.get<ServiceManager>().pageService);
+    module.single((Scope scope, DefinitionParameters parameters) =>
+        scope.get<ServiceManager>().reviewService);
+  });
+
+  static Module dbModule = module((Module module) {
+    module.single(
+        (Scope scope, DefinitionParameters parameters) => DBUtils.appDatabase);
+    module.single((Scope scope, DefinitionParameters parameters) =>
+        scope.get<AppDatabase>().screenDao);
+    module.single((Scope scope, DefinitionParameters parameters) =>
+        scope.get<AppDatabase>().spaceDao);
+    module.single((Scope scope, DefinitionParameters parameters) =>
+        scope.get<AppDatabase>().searchHistoryDao);
+    module.single((Scope scope, DefinitionParameters parameters) =>
+        scope.get<AppDatabase>().installedAppDao);
+  });
+}
+```
+
+
 ## The following is a simple instruction:
 
 * If you want to use it, you can directly use inject() to generate it
