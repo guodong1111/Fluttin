@@ -1,9 +1,7 @@
-# fluttin
-
-A Flutter version of koin.
+# Fluttin
+A pragmatic lightweight dependency injection framework for Flutter developers.
 
 ## Getting Started
-
 This is the Flutter version of koin, which is almost the same as the original koin in use.
 It's just that dart's closure doesn't support receiver type, so it looks a bit complicated in this class
 But the principle is the same.
@@ -60,12 +58,6 @@ class Modules {
     module.factory((Scope scope, DefinitionParameters parameters) =>
         MyGameRepository(
             scope.get(), scope.get(), scope.get(), scope.get(), scope.get()));
-    module.factory((Scope scope, DefinitionParameters parameters) =>
-        ReviewRepository(scope.get(), scope.get()));
-    module.factory((Scope scope, DefinitionParameters parameters) =>
-        RelationRepository(scope.get(), scope.get()));
-    module.factory((Scope scope, DefinitionParameters parameters) =>
-        FavoriteRepository(scope.get(), scope.get()));
   });
 
   static Module screenModule = module((Module module) {
@@ -77,12 +69,6 @@ class Modules {
         ServiceManager.instance);
     module.single((Scope scope, DefinitionParameters parameters) =>
         scope.get<ServiceManager>().gatewayService);
-    module.single((Scope scope, DefinitionParameters parameters) =>
-        scope.get<ServiceManager>().userService);
-    module.single((Scope scope, DefinitionParameters parameters) =>
-        scope.get<ServiceManager>().pageService);
-    module.single((Scope scope, DefinitionParameters parameters) =>
-        scope.get<ServiceManager>().reviewService);
   });
 
   static Module dbModule = module((Module module) {
@@ -90,13 +76,23 @@ class Modules {
         (Scope scope, DefinitionParameters parameters) => DBUtils.appDatabase);
     module.single((Scope scope, DefinitionParameters parameters) =>
         scope.get<AppDatabase>().screenDao);
-    module.single((Scope scope, DefinitionParameters parameters) =>
-        scope.get<AppDatabase>().spaceDao);
-    module.single((Scope scope, DefinitionParameters parameters) =>
-        scope.get<AppDatabase>().searchHistoryDao);
-    module.single((Scope scope, DefinitionParameters parameters) =>
-        scope.get<AppDatabase>().installedAppDao);
   });
+}
+```
+
+You don’t need to pay attention to how other classes are generated in this class
+```dart
+
+class MyGameRepository {
+  MyGameRepository(this._appInfoDao, this._downloadPackageDao,
+          this._taskInfoDao, this._userAppDao, this._appVirtualDao);
+
+  final AppInfoDao _appInfoDao;
+  final DownloadPackageDao _downloadPackageDao;
+  final DownloadTaskDao _taskInfoDao;
+  final UserAppDao _userAppDao;
+  final AppVirtualDao _appVirtualDao;
+  
 }
 ```
 
@@ -107,7 +103,7 @@ class Modules {
 
 ```dart
 class _XXState extends State<XXWidget> {
-    ChatUseCase _chatUseCase = inject();
+  MyGameRepository _myGameRepository = inject();
     @override
     Widget build(BuildContext context) {
         return Scaffold();
