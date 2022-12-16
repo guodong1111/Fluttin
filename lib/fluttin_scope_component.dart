@@ -9,7 +9,6 @@ Fluttin _getFluttin() => GlobalContext.getInstance().get();
 List<Scope> _scopePools = [];
 
 abstract class FluttinScopeComponent {
-
   late final Scope scope;
 
   FluttinScopeComponent() {
@@ -17,7 +16,8 @@ abstract class FluttinScopeComponent {
     _scopePools.add(scope);
   }
 
-  String getScopeId() => '$runtimeType@${DateTime.now().microsecondsSinceEpoch}';
+  String getScopeId() =>
+      '$runtimeType@${DateTime.now().microsecondsSinceEpoch}';
 
   Qualifier getScopeName() => TypeQualifier(this.runtimeType);
 
@@ -30,10 +30,10 @@ abstract class FluttinScopeComponent {
     _scopePools.remove(scope);
     scope.close();
   }
-
 }
 
-T create<T>(FluttinScopeComponent component, {Qualifier? qualifier, ParametersDefinition? parameters}) {
+T create<T>(FluttinScopeComponent component,
+    {Qualifier? qualifier, ParametersDefinition? parameters}) {
   return component.scope.get(qualifier: qualifier, parameters: parameters);
 }
 
@@ -46,5 +46,7 @@ T inject<T>({Qualifier? qualifier, ParametersDefinition? parameters}) {
     }
   }
 
-  return _getFluttin().rootScope.get(qualifier: qualifier, parameters: parameters);
+  return _getFluttin()
+      .rootScope
+      .get(qualifier: qualifier, parameters: parameters);
 }

@@ -54,7 +54,8 @@ class Scope {
     final String key = indexKey(runtimeType, qualifier);
 
     T? instance = _instanceRegistry.resolveInstance(key, parameters) ??
-        getFromSource() ?? _parameters?.getOrNull() ??
+        getFromSource() ??
+        _parameters?.getOrNull() ??
         findInOtherScope(qualifier, parameters);
     if (null == instance) {
       throw Exception('no instance found for $key on scope ${toString()}');
@@ -70,14 +71,12 @@ class Scope {
     }
   }
 
-  T? findInOtherScope<T>(Qualifier? qualifier,
-      ParametersDefinition? parameters) {
+  T? findInOtherScope<T>(
+      Qualifier? qualifier, ParametersDefinition? parameters) {
     T? instance;
     for (Scope scope in _linkedScope) {
-      instance = scope.getOrNull<T>(
-          qualifier: qualifier,
-          parameters: parameters
-      );
+      instance =
+          scope.getOrNull<T>(qualifier: qualifier, parameters: parameters);
       if (instance != null) break;
     }
     return instance;
