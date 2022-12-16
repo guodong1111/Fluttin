@@ -1,6 +1,6 @@
 
 import 'fluttin.dart';
-import 'globa_context.dart';
+import 'global_context.dart';
 
 abstract class FluttinContext {
 

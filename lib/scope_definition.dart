@@ -8,7 +8,7 @@ class ScopeDefinition {
   ScopeDefinition(this.qualifier);
 
   static const String ROOT_SCOPE_ID = '-Root-';
-  static Qualifier ROOT_SCOPE_QUALIFIER = StringQualifier(ROOT_SCOPE_ID);
+  static const Qualifier ROOT_SCOPE_QUALIFIER = StringQualifier(ROOT_SCOPE_ID);
 
   static ScopeDefinition rootDefinition() =>
       ScopeDefinition(ROOT_SCOPE_QUALIFIER);

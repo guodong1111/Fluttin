@@ -1,10 +1,12 @@
 
 abstract class Qualifier {
+  const Qualifier();
+
   abstract final String value;
 }
 
 class StringQualifier extends Qualifier {
-  StringQualifier(this.value);
+  const StringQualifier(this.value);
 
   @override
   final String value;

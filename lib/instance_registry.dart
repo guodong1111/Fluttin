@@ -35,9 +35,9 @@ class InstanceRegistry {
 
   InstanceFactory createInstanceFactory(BeanDefinition definition) {
     switch (definition.kind) {
-      case Kind.Single:
+      case Kind.single:
         return SingleInstanceFactory(definition);
-      case Kind.Factory:
+      case Kind.factory:
         return FactoryInstanceFactory(definition);
     }
   }

@@ -82,5 +82,5 @@ class DefinitionParameters {
 }
 
 enum Kind {
-  Single, Factory
+  single, factory
 }

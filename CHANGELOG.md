@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.0.0+3] - 2022-12-16
+improve score of pub.dev
+
 ## [1.0.0+2] - 2022-12-15
 fix license
 
