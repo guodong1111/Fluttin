@@ -1,9 +1,7 @@
-
 import 'fluttin.dart';
 import 'global_context.dart';
 
 abstract class FluttinContext {
-
   Fluttin get();
 
   Fluttin? getOrNull();
@@ -48,7 +46,6 @@ class GlobalContext extends FluttinContext {
     _fluttin?.close();
     _fluttin = null;
   }
-
 }
 
 void startFluttin(FluttinAppDeclaration declaration) {

@@ -1,4 +1,3 @@
-
 import 'fluttin.dart';
 import 'module.dart';
 
@@ -27,5 +26,4 @@ class FluttinApplication {
   void _loadModules(List<Module> modules) {
     fluttin.loadModules(modules);
   }
-
 }

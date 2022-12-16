@@ -1,4 +1,3 @@
-
 abstract class Qualifier {
   const Qualifier();
 
@@ -18,7 +17,7 @@ class StringQualifier extends Qualifier {
 }
 
 class TypeQualifier extends Qualifier {
-  TypeQualifier(Type type): value = type.toString();
+  TypeQualifier(Type type) : value = type.toString();
 
   @override
   final String value;

@@ -7,7 +7,8 @@ typedef ParametersDefinition = DefinitionParameters Function();
 
 //定義工廠模式的藍圖
 class BeanDefinition<T> {
-  BeanDefinition(this.scopeQualifier, this.primaryType, this.qualifier, this.definition, this.kind);
+  BeanDefinition(this.scopeQualifier, this.primaryType, this.qualifier,
+      this.definition, this.kind);
 
   final Qualifier scopeQualifier;
   final Type primaryType;
@@ -26,7 +27,8 @@ String indexKey(Type runtimeType, Qualifier? qualifier) {
 
 //提供外部帶參數的地方
 class DefinitionParameters {
-  DefinitionParameters({List<dynamic>? values}) : _values = values ?? <dynamic>[];
+  DefinitionParameters({List<dynamic>? values})
+      : _values = values ?? <dynamic>[];
 
   final List<dynamic> _values;
 
@@ -81,6 +83,4 @@ class DefinitionParameters {
   int get hashCode => const ListEquality().hash(_values);
 }
 
-enum Kind {
-  single, factory
-}
+enum Kind { single, factory }

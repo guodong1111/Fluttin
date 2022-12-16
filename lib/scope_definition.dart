@@ -1,4 +1,3 @@
-
 import 'dart:collection';
 
 import 'definition.dart';

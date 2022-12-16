@@ -56,7 +56,6 @@ class InstanceRegistry {
     saveDefinition(definition);
   }
 
-
   void close() {
     for (InstanceFactory factory in _instances.values) {
       factory.drop();

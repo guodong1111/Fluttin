@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.0.0+4] - 2022-12-16
+dart format
+
 ## [1.0.0+3] - 2022-12-16
 improve score of pub.dev
 

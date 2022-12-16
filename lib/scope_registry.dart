@@ -1,4 +1,3 @@
-
 import 'dart:collection';
 
 import 'definition.dart';
@@ -13,14 +12,13 @@ class ScopeRegistry {
 
   final Fluttin _fluttin;
   Map<String, ScopeDefinition> scopeDefinitions =
-  HashMap<String, ScopeDefinition>();
+      HashMap<String, ScopeDefinition>();
 
   Map<String, Scope> _scopes = HashMap<String, Scope>();
 
   ScopeDefinition? _rootScopeDefinition;
 
   Scope? _rootScope;
-
 
   Scope get rootScope => _rootScope!;
 
@@ -50,7 +48,7 @@ class ScopeRegistry {
 
   void declareDefinition(BeanDefinition bean) {
     final ScopeDefinition? scopeDef =
-    scopeDefinitions[bean.scopeQualifier.value];
+        scopeDefinitions[bean.scopeQualifier.value];
     scopeDef?.save(bean);
     _scopes.values
         .where((scope) => scope.scopeDefinition == scopeDef)
@@ -82,7 +80,8 @@ class ScopeRegistry {
 
     ScopeDefinition? scopeDefinition = scopeDefinitions[qualifier.value];
     if (scopeDefinition != null) {
-      Scope createdScope = createScopeByDefinition(scopeId, scopeDefinition, source: source);
+      Scope createdScope =
+          createScopeByDefinition(scopeId, scopeDefinition, source: source);
       _scopes[scopeId] = createdScope;
       return createdScope;
     } else {
@@ -91,8 +90,8 @@ class ScopeRegistry {
     }
   }
 
-  Scope createScopeByDefinition(
-      String scopeId, ScopeDefinition scopeDefinition, {dynamic source}) {
+  Scope createScopeByDefinition(String scopeId, ScopeDefinition scopeDefinition,
+      {dynamic source}) {
     Scope scope = Scope(_fluttin, scopeId, scopeDefinition, source: source);
     List<Scope> links = <Scope>[];
     if (null != _rootScope) {
@@ -109,7 +108,7 @@ class ScopeRegistry {
   void unloadModule(Module module) {
     for (BeanDefinition bean in module.definitions) {
       ScopeDefinition? scopeDefinition =
-      scopeDefinitions[bean.scopeQualifier.value];
+          scopeDefinitions[bean.scopeQualifier.value];
       scopeDefinition?.unloadDefinition(bean);
       _scopes.values.where((element) {
         return element.scopeDefinition.qualifier == scopeDefinition?.qualifier;

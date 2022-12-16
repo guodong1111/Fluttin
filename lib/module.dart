@@ -1,4 +1,3 @@
-
 import 'dart:collection';
 
 import 'definition.dart';
@@ -16,7 +15,6 @@ Module module(ModuleDeclaration moduleDeclaration) {
 }
 
 class Module {
-
   final Qualifier rootScope = ScopeDefinition.ROOT_SCOPE_QUALIFIER;
 
   Set<BeanDefinition> definitions = HashSet<BeanDefinition>();
