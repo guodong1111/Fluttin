@@ -1,6 +1,7 @@
 import 'definition.dart';
 import 'fluttin.dart';
 import 'instance_registry.dart';
+import 'key.dart';
 import 'qualifier.dart';
 import 'scope_definition.dart';
 
@@ -51,7 +52,7 @@ class Scope {
 
   T resolveInstance<T>(Qualifier? qualifier, Type runtimeType,
       ParametersDefinition? parameters) {
-    final String key = indexKey(runtimeType, qualifier);
+    final IndexKey key = generateKey(runtimeType, qualifier);
 
     T? instance = _instanceRegistry.resolveInstance(key, parameters) ??
         getFromSource() ??

@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'key.dart';
 import 'qualifier.dart';
 import 'scope.dart';
 
@@ -17,12 +18,8 @@ class BeanDefinition<T> {
   final Kind kind;
 }
 
-String indexKey(Type runtimeType, Qualifier? qualifier) {
-  if (null != qualifier) {
-    return '$runtimeType::${qualifier.value}';
-  } else {
-    return runtimeType.toString();
-  }
+IndexKey generateKey(Type runtimeType, Qualifier? qualifier) {
+  return IndexKey(runtimeType, qualifier);
 }
 
 //提供外部帶參數的地方

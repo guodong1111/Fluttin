@@ -1,6 +1,7 @@
 import 'definition.dart';
 import 'instance_context.dart';
 import 'instance_factory.dart';
+import 'key.dart';
 import 'scope.dart';
 
 class InstanceRegistry {
@@ -8,7 +9,7 @@ class InstanceRegistry {
 
   final Scope _scope;
 
-  final Map<String, InstanceFactory> _instances = <String, InstanceFactory>{};
+  final Map<IndexKey, InstanceFactory> _instances = <IndexKey, InstanceFactory>{};
 
   void create(Set<BeanDefinition> definitions) {
     for (BeanDefinition definition in definitions) {
@@ -16,7 +17,7 @@ class InstanceRegistry {
     }
   }
 
-  T? resolveInstance<T>(String indexKey, ParametersDefinition? parameters) {
+  T? resolveInstance<T>(IndexKey indexKey, ParametersDefinition? parameters) {
     return _instances[indexKey]?.get(defaultInstanceContext(parameters));
   }
 
@@ -25,11 +26,11 @@ class InstanceRegistry {
 
   void saveDefinition(BeanDefinition definition) {
     InstanceFactory instanceFactory = createInstanceFactory(definition);
-    _saveInstance(indexKey(definition.primaryType, definition.qualifier),
+    _saveInstance(generateKey(definition.primaryType, definition.qualifier),
         instanceFactory);
   }
 
-  void _saveInstance(String key, InstanceFactory factory) {
+  void _saveInstance(IndexKey key, InstanceFactory factory) {
     _instances[key] = factory;
   }
 
@@ -43,7 +44,7 @@ class InstanceRegistry {
   }
 
   void dropDefinition(BeanDefinition definition) {
-    List<String> ids = _instances.entries
+    List<IndexKey> ids = _instances.entries
         .where((element) {
           return element.value.beanDefinition == definition;
         })
