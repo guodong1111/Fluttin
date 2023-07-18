@@ -11,8 +11,8 @@ class ScopeRegistry {
   ScopeRegistry(this._fluttin);
 
   final Fluttin _fluttin;
-  Map<dynamic, ScopeDefinition> scopeDefinitions =
-      HashMap<dynamic, ScopeDefinition>();
+  Map<Qualifier, ScopeDefinition> scopeDefinitions =
+      HashMap<Qualifier, ScopeDefinition>();
 
   Map<String, Scope> _scopes = HashMap<String, Scope>();
 
@@ -41,14 +41,14 @@ class ScopeRegistry {
 
   void createScopeDefinition(Qualifier qualifier) {
     final ScopeDefinition def = ScopeDefinition(qualifier);
-    if (scopeDefinitions[qualifier.value] == null) {
-      scopeDefinitions[qualifier.value] = def;
+    if (scopeDefinitions[qualifier] == null) {
+      scopeDefinitions[qualifier] = def;
     }
   }
 
   void declareDefinition(BeanDefinition bean) {
     final ScopeDefinition? scopeDef =
-        scopeDefinitions[bean.scopeQualifier.value];
+        scopeDefinitions[bean.scopeQualifier];
     scopeDef?.save(bean);
     _scopes.values
         .where((scope) => scope.scopeDefinition == scopeDef)
@@ -60,7 +60,7 @@ class ScopeRegistry {
   void createRootScopeDefinition() {
     if (_rootScopeDefinition == null) {
       ScopeDefinition scopeDefinition = ScopeDefinition.rootDefinition();
-      scopeDefinitions[ScopeDefinition.ROOT_SCOPE_QUALIFIER.value] =
+      scopeDefinitions[ScopeDefinition.ROOT_SCOPE_QUALIFIER] =
           scopeDefinition;
       _rootScopeDefinition = scopeDefinition;
     }
@@ -78,7 +78,7 @@ class ScopeRegistry {
       throw Exception("Scope with id '$scopeId' is already created");
     }
 
-    ScopeDefinition? scopeDefinition = scopeDefinitions[qualifier.value];
+    ScopeDefinition? scopeDefinition = scopeDefinitions[qualifier];
     if (scopeDefinition != null) {
       Scope createdScope =
           createScopeByDefinition(scopeId, scopeDefinition, source: source);
@@ -86,7 +86,7 @@ class ScopeRegistry {
       return createdScope;
     } else {
       throw Exception(
-          'No Scope Definition found for qualifer \'${qualifier.value}\'');
+          'No Scope Definition found for qualifer \'$qualifier\'');
     }
   }
 
@@ -108,7 +108,7 @@ class ScopeRegistry {
   void unloadModule(Module module) {
     for (BeanDefinition bean in module.definitions) {
       ScopeDefinition? scopeDefinition =
-          scopeDefinitions[bean.scopeQualifier.value];
+          scopeDefinitions[bean.scopeQualifier];
       scopeDefinition?.unloadDefinition(bean);
       _scopes.values.where((element) {
         return element.scopeDefinition.qualifier == scopeDefinition?.qualifier;

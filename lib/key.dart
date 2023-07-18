@@ -10,7 +10,7 @@ class IndexKey {
   @override
   String toString() {
     if (null != qualifier) {
-      return '$runtimeType::${qualifier?.value}';
+      return '$runtimeType::$qualifier';
     } else {
       return runtimeType.toString();
     }
