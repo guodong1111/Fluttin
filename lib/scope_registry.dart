@@ -11,7 +11,7 @@ class ScopeRegistry {
   ScopeRegistry(this._fluttin);
 
   final Fluttin _fluttin;
-  Map<String, ScopeDefinition> scopeDefinitions =
+  Map<dynamic, ScopeDefinition> scopeDefinitions =
       HashMap<String, ScopeDefinition>();
 
   Map<String, Scope> _scopes = HashMap<String, Scope>();

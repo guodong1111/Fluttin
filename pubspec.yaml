@@ -1,10 +1,10 @@
 name: fluttin
 description: A pragmatic lightweight dependency injection framework for Flutter developers.
-version: 1.0.0+6
+version: 1.0.0+7
 homepage: https://github.com/guodong1111/Fluttin
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.14.0 <3.0.0"
 
 dependencies:
   flutter:

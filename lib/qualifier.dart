@@ -1,10 +1,10 @@
-abstract class Qualifier {
+abstract class Qualifier<T> {
   const Qualifier();
 
-  abstract final String value;
+  abstract final T value;
 }
 
-class StringQualifier extends Qualifier {
+class StringQualifier extends Qualifier<String> {
   const StringQualifier(this.value);
 
   @override
@@ -16,14 +16,27 @@ class StringQualifier extends Qualifier {
   }
 }
 
-class TypeQualifier extends Qualifier {
-  TypeQualifier(Type type) : value = type.toString();
+class TypeQualifier extends Qualifier<Type> {
+  const TypeQualifier(this.value);
 
   @override
-  final String value;
+  final Type value;
 
   @override
   String toString() {
     return 'q:$value';
   }
 }
+
+class EnumQualifier extends Qualifier<Enum> {
+  const EnumQualifier(this.value);
+
+  @override
+  final Enum value;
+
+  @override
+  String toString() {
+    return 'q:$value';
+  }
+}
+
