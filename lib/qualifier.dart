@@ -24,7 +24,7 @@ class TypeQualifier extends Qualifier<Type> {
 
   @override
   String toString() {
-    return 'q:$value';
+    return 'TypeQualifier{value: $value}';
   }
 }
 
@@ -36,7 +36,7 @@ class EnumQualifier extends Qualifier<Enum> {
 
   @override
   String toString() {
-    return 'q:$value';
+    return 'EnumQualifier{value: $value}';
   }
 }
 
