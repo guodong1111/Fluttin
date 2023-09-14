@@ -55,6 +55,10 @@ class DefinitionParameters {
     _values.insert(index, t);
   }
 
+  bool contains<T>(T t) {
+    return _values.contains(t);
+  }
+
   int size() {
     return _values.length;
   }
