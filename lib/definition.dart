@@ -35,7 +35,15 @@ class DefinitionParameters {
     return _values[index] as T;
   }
 
-  T? getOrNull<T>() {
+  T? getOrNull<T>(int index) {
+    try {
+      return this[index] as T?;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  T? getTypeOrNull<T>() {
     try {
       return _values.singleWhere((element) => element is T);
     } catch (e) {

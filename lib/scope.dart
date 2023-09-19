@@ -56,7 +56,7 @@ class Scope {
 
     T? instance = _instanceRegistry.resolveInstance(key, parameters) ??
         getFromSource() ??
-        _parameters?.getOrNull() ??
+        _parameters?.getTypeOrNull() ??
         findInOtherScope(qualifier, parameters);
     if (null == instance) {
       throw Exception('no instance found for $key on scope ${toString()}');
